@@ -4,5 +4,8 @@
   },
   "1.0.2": {
     "en": "Adjusted battery driver, revised description"
+  },
+  "1.0.3": {
+    "en": "Added manual feeding"
   }
 }
