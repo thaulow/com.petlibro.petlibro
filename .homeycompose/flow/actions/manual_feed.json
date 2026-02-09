@@ -1,0 +1,26 @@
+{
+  "id": "manual_feed",
+  "title": {
+    "en": "Dispense food manually"
+  },
+  "titleFormatted": {
+    "en": "Dispense [[portions]] portions of food"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=feeder"
+    },
+    {
+      "type": "number",
+      "name": "portions",
+      "title": {
+        "en": "Portions"
+      },
+      "min": 1,
+      "max": 12,
+      "step": 1
+    }
+  ]
+}

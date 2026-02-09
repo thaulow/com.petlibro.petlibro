@@ -1,0 +1,10 @@
+{
+  "drivers": {
+    "feeder": {
+      "name": "Petlibro Feeder"
+    },
+    "fountain": {
+      "name": "Petlibro Fountain"
+    }
+  }
+}

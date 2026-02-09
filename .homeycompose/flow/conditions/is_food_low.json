@@ -1,0 +1,13 @@
+{
+  "id": "is_food_low",
+  "title": {
+    "en": "Food level is !{{low|not low}}"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=feeder"
+    }
+  ]
+}

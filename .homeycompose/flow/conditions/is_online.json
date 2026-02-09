@@ -1,0 +1,13 @@
+{
+  "id": "is_online",
+  "title": {
+    "en": "Device is !{{online|offline}}"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=feeder|fountain"
+    }
+  ]
+}

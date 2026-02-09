@@ -1,0 +1,66 @@
+{
+  "name": {
+    "en": "Petlibro Feeder"
+  },
+  "class": "other",
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.jpg",
+    "large": "{{driverAssetsPath}}/images/large.jpg",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.jpg"
+  },
+  "capabilities": [
+    "measure_battery",
+    "alarm_battery",
+    "food_level",
+    "feeding_today_amount",
+    "feeding_today_times",
+    "desiccant_remaining",
+    "wifi_signal"
+  ],
+  "pair": [
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "logo": "../assets/icon.svg"
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "settings": [
+    {
+      "type": "group",
+      "label": {
+        "en": "Device Info"
+      },
+      "children": [
+        {
+          "id": "serial",
+          "type": "label",
+          "label": {
+            "en": "Serial Number"
+          },
+          "value": ""
+        },
+        {
+          "id": "model",
+          "type": "label",
+          "label": {
+            "en": "Model"
+          },
+          "value": ""
+        }
+      ]
+    }
+  ]
+}

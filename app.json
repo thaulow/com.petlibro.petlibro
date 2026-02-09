@@ -1,0 +1,387 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.petlibro.petlibro",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Petlibro"
+  },
+  "description": {
+    "en": "Adds support for Petlibro devices"
+  },
+  "category": [
+    "appliances"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.jpg",
+    "large": "/assets/images/large.jpg",
+    "xlarge": "/assets/images/xlarge.jpg"
+  },
+  "brandColor": "#000000",
+  "author": {
+    "name": "Thomas Thaulow",
+    "email": "thaulow@thaulow.co"
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "device_offline",
+        "title": {
+          "en": "Device went offline"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=feeder|fountain"
+          }
+        ]
+      },
+      {
+        "id": "food_low",
+        "title": {
+          "en": "Food level became low"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=feeder"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "is_food_low",
+        "title": {
+          "en": "Food level is !{{low|not low}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=feeder"
+          }
+        ]
+      },
+      {
+        "id": "is_online",
+        "title": {
+          "en": "Device is !{{online|offline}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=feeder|fountain"
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "manual_feed",
+        "title": {
+          "en": "Dispense food manually"
+        },
+        "titleFormatted": {
+          "en": "Dispense [[portions]] portions of food"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=feeder"
+          },
+          {
+            "type": "number",
+            "name": "portions",
+            "title": {
+              "en": "Portions"
+            },
+            "min": 1,
+            "max": 12,
+            "step": 1
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Petlibro Feeder"
+      },
+      "class": "other",
+      "images": {
+        "small": "/drivers/feeder/assets/images/small.jpg",
+        "large": "/drivers/feeder/assets/images/large.jpg",
+        "xlarge": "/drivers/feeder/assets/images/xlarge.jpg"
+      },
+      "capabilities": [
+        "measure_battery",
+        "alarm_battery",
+        "food_level",
+        "feeding_today_amount",
+        "feeding_today_times",
+        "desiccant_remaining",
+        "wifi_signal"
+      ],
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../assets/icon.svg"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Info"
+          },
+          "children": [
+            {
+              "id": "serial",
+              "type": "label",
+              "label": {
+                "en": "Serial Number"
+              },
+              "value": ""
+            },
+            {
+              "id": "model",
+              "type": "label",
+              "label": {
+                "en": "Model"
+              },
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "id": "feeder"
+    },
+    {
+      "name": {
+        "en": "Petlibro Fountain"
+      },
+      "class": "other",
+      "images": {
+        "small": "/drivers/fountain/assets/images/small.jpg",
+        "large": "/drivers/fountain/assets/images/large.jpg",
+        "xlarge": "/drivers/fountain/assets/images/xlarge.jpg"
+      },
+      "capabilities": [
+        "measure_battery",
+        "alarm_battery",
+        "water_today_ml",
+        "filter_remaining_days",
+        "cleaning_remaining_days",
+        "wifi_signal"
+      ],
+      "pair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../assets/icon.svg"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Info"
+          },
+          "children": [
+            {
+              "id": "serial",
+              "type": "label",
+              "label": {
+                "en": "Serial Number"
+              },
+              "value": ""
+            },
+            {
+              "id": "model",
+              "type": "label",
+              "label": {
+                "en": "Model"
+              },
+              "value": ""
+            }
+          ]
+        }
+      ],
+      "id": "fountain"
+    }
+  ],
+  "capabilities": {
+    "cleaning_remaining_days": {
+      "type": "number",
+      "title": {
+        "en": "Cleaning Due In"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "units": {
+        "en": "days"
+      },
+      "min": 0,
+      "max": 90,
+      "step": 1
+    },
+    "desiccant_remaining": {
+      "type": "number",
+      "title": {
+        "en": "Desiccant Remaining"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "units": {
+        "en": "days"
+      },
+      "min": 0,
+      "max": 90,
+      "step": 1
+    },
+    "feeding_today_amount": {
+      "type": "number",
+      "title": {
+        "en": "Food Dispensed Today"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "units": {
+        "en": "portions"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    "feeding_today_times": {
+      "type": "number",
+      "title": {
+        "en": "Feedings Today"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "units": {
+        "en": "times"
+      },
+      "min": 0,
+      "max": 50,
+      "step": 1
+    },
+    "filter_remaining_days": {
+      "type": "number",
+      "title": {
+        "en": "Filter Remaining"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "units": {
+        "en": "days"
+      },
+      "min": 0,
+      "max": 90,
+      "step": 1
+    },
+    "food_level": {
+      "type": "enum",
+      "title": {
+        "en": "Food Level"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "values": [
+        {
+          "id": "ok",
+          "title": {
+            "en": "OK"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "empty",
+          "title": {
+            "en": "Empty"
+          }
+        }
+      ]
+    },
+    "water_today_ml": {
+      "type": "number",
+      "title": {
+        "en": "Water Consumed Today"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "units": {
+        "en": "mL"
+      },
+      "min": 0,
+      "max": 5000,
+      "step": 1
+    },
+    "wifi_signal": {
+      "type": "number",
+      "title": {
+        "en": "WiFi Signal"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "units": {
+        "en": "dBm"
+      },
+      "min": -100,
+      "max": 0,
+      "step": 1
+    }
+  }
+}

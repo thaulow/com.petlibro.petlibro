@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Feedings Today"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "units": {
+    "en": "times"
+  },
+  "min": 0,
+  "max": 50,
+  "step": 1
+}

@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Cleaning Due In"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "units": {
+    "en": "days"
+  },
+  "min": 0,
+  "max": 90,
+  "step": 1
+}

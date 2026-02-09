@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Water Consumed Today"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "units": {
+    "en": "mL"
+  },
+  "min": 0,
+  "max": 5000,
+  "step": 1
+}

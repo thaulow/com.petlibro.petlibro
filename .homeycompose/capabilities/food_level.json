@@ -1,0 +1,29 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Food Level"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "values": [
+    {
+      "id": "ok",
+      "title": {
+        "en": "OK"
+      }
+    },
+    {
+      "id": "low",
+      "title": {
+        "en": "Low"
+      }
+    },
+    {
+      "id": "empty",
+      "title": {
+        "en": "Empty"
+      }
+    }
+  ]
+}

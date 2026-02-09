@@ -1,0 +1,13 @@
+{
+  "id": "device_offline",
+  "title": {
+    "en": "Device went offline"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=feeder|fountain"
+    }
+  ]
+}

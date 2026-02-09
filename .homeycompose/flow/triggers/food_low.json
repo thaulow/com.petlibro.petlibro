@@ -1,0 +1,13 @@
+{
+  "id": "food_low",
+  "title": {
+    "en": "Food level became low"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=feeder"
+    }
+  ]
+}
