@@ -17,6 +17,11 @@ class FeederDevice extends Homey.Device {
       model: this.getStoreValue('modelName') || this.getStoreValue('model') || '',
     }).catch(() => {});
 
+    // Register button handler for manual feed
+    this.registerCapabilityListener('manual_feed', async () => {
+      await this.triggerManualFeed(1);
+    });
+
     // Initial poll
     await this.pollDeviceState();
 
@@ -38,16 +43,30 @@ class FeederDevice extends Homey.Device {
       const app = this.homey.app as any;
       const api = app.getApi();
 
-      const [realInfo, grainStatus] = await Promise.all([
-        api.getDeviceRealInfo(this.serial),
-        api.getGrainStatus(this.serial),
-      ]);
+      this.log(`Polling device ${this.serial}...`);
+
+      let realInfo: any;
+      let grainStatus: any;
+
+      try {
+        realInfo = await api.getDeviceRealInfo(this.serial);
+        this.log('realInfo response:', JSON.stringify(realInfo));
+      } catch (err) {
+        this.error('Failed to get realInfo:', err);
+        return;
+      }
+
+      try {
+        grainStatus = await api.getGrainStatus(this.serial);
+        this.log('grainStatus response:', JSON.stringify(grainStatus));
+      } catch (err) {
+        this.error('Failed to get grainStatus:', err);
+      }
 
       // Online status
-      if (!realInfo.online) {
+      if (realInfo.online === false) {
         if (this.getAvailable()) {
           await this.setUnavailable('Device is offline');
-          await this.driver.ready();
           this.homey.flow.getDeviceTriggerCard('device_offline')
             .trigger(this, {}, {}).catch(() => {});
         }
@@ -58,11 +77,18 @@ class FeederDevice extends Homey.Device {
         await this.setAvailable();
       }
 
-      // Battery
-      const battery = realInfo.electricQuantity ?? null;
-      if (battery !== null) {
+      // Battery (only for battery-powered devices)
+      const battery = realInfo.electricQuantity;
+      if (battery !== undefined && battery !== null && battery > 0) {
+        if (!this.hasCapability('measure_battery')) {
+          await this.addCapability('measure_battery');
+          await this.addCapability('alarm_battery');
+        }
         await this.setCapabilityValue('measure_battery', battery).catch(() => {});
         await this.setCapabilityValue('alarm_battery', battery < 15).catch(() => {});
+      } else if (this.hasCapability('measure_battery')) {
+        await this.removeCapability('measure_battery');
+        await this.removeCapability('alarm_battery');
       }
 
       // Food level
@@ -78,14 +104,18 @@ class FeederDevice extends Homey.Device {
 
       // Feeding stats
       if (grainStatus) {
-        await this.setCapabilityValue(
-          'feeding_today_amount',
-          grainStatus.todayFeedingQuantity ?? 0,
-        ).catch(() => {});
-        await this.setCapabilityValue(
-          'feeding_today_times',
-          grainStatus.todayFeedingTimes ?? 0,
-        ).catch(() => {});
+        if (grainStatus.todayFeedingQuantity !== undefined) {
+          await this.setCapabilityValue(
+            'feeding_today_amount',
+            grainStatus.todayFeedingQuantity,
+          ).catch(() => {});
+        }
+        if (grainStatus.todayFeedingTimes !== undefined) {
+          await this.setCapabilityValue(
+            'feeding_today_times',
+            grainStatus.todayFeedingTimes,
+          ).catch(() => {});
+        }
       }
 
       // Desiccant remaining
@@ -100,6 +130,8 @@ class FeederDevice extends Homey.Device {
       if (realInfo.wifiRssi !== undefined) {
         await this.setCapabilityValue('wifi_signal', realInfo.wifiRssi).catch(() => {});
       }
+
+      this.log('Poll complete');
     } catch (err) {
       this.error('Failed to poll device state:', err);
     }

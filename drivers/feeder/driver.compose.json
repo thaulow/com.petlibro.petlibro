@@ -8,12 +8,8 @@
     "large": "{{driverAssetsPath}}/images/large.jpg",
     "xlarge": "{{driverAssetsPath}}/images/xlarge.jpg"
   },
-  "energy": {
-    "batteries": ["INTERNAL"]
-  },
   "capabilities": [
-    "measure_battery",
-    "alarm_battery",
+    "manual_feed",
     "food_level",
     "feeding_today_amount",
     "feeding_today_times",

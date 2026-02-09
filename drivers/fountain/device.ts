@@ -54,11 +54,18 @@ class FountainDevice extends Homey.Device {
         await this.setAvailable();
       }
 
-      // Battery
-      const battery = realInfo.electricQuantity ?? null;
-      if (battery !== null) {
+      // Battery (only for battery-powered devices)
+      const battery = realInfo.electricQuantity;
+      if (battery !== undefined && battery !== null && battery > 0) {
+        if (!this.hasCapability('measure_battery')) {
+          await this.addCapability('measure_battery');
+          await this.addCapability('alarm_battery');
+        }
         await this.setCapabilityValue('measure_battery', battery).catch(() => {});
         await this.setCapabilityValue('alarm_battery', battery < 15).catch(() => {});
+      } else if (this.hasCapability('measure_battery')) {
+        await this.removeCapability('measure_battery');
+        await this.removeCapability('alarm_battery');
       }
 
       // Water consumed today

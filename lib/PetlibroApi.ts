@@ -16,18 +16,20 @@ export class PetlibroApi {
   }
 
   async listDevices(): Promise<DeviceListItem[]> {
-    const data = await this.session.request<DeviceListItem[]>('/device/device/list');
+    const data = await this.session.request<DeviceListItem[]>('/device/device/list', {});
     return data ?? [];
   }
 
   async getDeviceRealInfo(serial: string): Promise<DeviceRealInfo> {
     return this.session.request<DeviceRealInfo>('/device/device/realInfo', {
       id: serial,
+      deviceSn: serial,
     });
   }
 
   async getGrainStatus(serial: string): Promise<GrainStatus> {
-    return this.session.request<GrainStatus>('/data/data/grainStatus', {
+    return this.session.request<GrainStatus>('/device/data/grainStatus', {
+      id: serial,
       deviceSn: serial,
     });
   }
@@ -35,21 +37,21 @@ export class PetlibroApi {
   async getDrinkWaterToday(serial: string): Promise<Record<string, unknown>> {
     return this.session.request<Record<string, unknown>>(
       '/data/deviceDrinkWater/todayDrinkData',
-      { deviceSn: serial },
+      { id: serial, deviceSn: serial },
     );
   }
 
   async setLightSwitch(serial: string, enable: boolean): Promise<void> {
     await this.session.request('/device/setting/updateLightSwitch', {
       deviceSn: serial,
-      lightSwitch: enable ? 1 : 0,
+      enable,
     });
   }
 
   async setSoundSwitch(serial: string, enable: boolean): Promise<void> {
     await this.session.request('/device/setting/updateSoundSwitch', {
       deviceSn: serial,
-      soundSwitch: enable ? 1 : 0,
+      enable,
     });
   }
 
@@ -57,6 +59,7 @@ export class PetlibroApi {
     await this.session.request('/device/device/manualFeeding', {
       deviceSn: serial,
       grainNum: portions,
+      requestId: Date.now().toString(),
     });
   }
 
