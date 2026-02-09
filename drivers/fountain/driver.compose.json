@@ -8,6 +8,9 @@
     "large": "{{driverAssetsPath}}/images/large.jpg",
     "xlarge": "{{driverAssetsPath}}/images/xlarge.jpg"
   },
+  "energy": {
+    "batteries": ["INTERNAL"]
+  },
   "capabilities": [
     "measure_battery",
     "alarm_battery",
