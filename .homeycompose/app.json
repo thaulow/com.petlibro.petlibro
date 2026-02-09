@@ -10,7 +10,7 @@
     "en": "Petlibro"
   },
   "description": {
-    "en": "Adds support for Petlibro devices"
+    "en": "Smart pet feeding and hydration, controlled from your Homey"
   },
   "category": [
     "appliances"
