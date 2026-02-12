@@ -10,6 +10,7 @@
   },
   "capabilities": [
     "manual_feed",
+    "feeding_dosage",
     "food_level",
     "feeding_today_amount",
     "feeding_today_times",

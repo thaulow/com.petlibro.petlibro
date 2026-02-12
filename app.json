@@ -126,6 +126,7 @@
       },
       "capabilities": [
         "manual_feed",
+        "feeding_dosage",
         "food_level",
         "feeding_today_amount",
         "feeding_today_times",
@@ -275,6 +276,90 @@
       "min": 0,
       "max": 90,
       "step": 1
+    },
+    "feeding_dosage": {
+      "type": "enum",
+      "title": {
+        "en": "Feeding Dosage"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "value": "1",
+      "values": [
+        {
+          "id": "1",
+          "title": {
+            "en": "1 portion"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "2 portions"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "3 portions"
+          }
+        },
+        {
+          "id": "4",
+          "title": {
+            "en": "4 portions"
+          }
+        },
+        {
+          "id": "5",
+          "title": {
+            "en": "5 portions"
+          }
+        },
+        {
+          "id": "6",
+          "title": {
+            "en": "6 portions"
+          }
+        },
+        {
+          "id": "7",
+          "title": {
+            "en": "7 portions"
+          }
+        },
+        {
+          "id": "8",
+          "title": {
+            "en": "8 portions"
+          }
+        },
+        {
+          "id": "9",
+          "title": {
+            "en": "9 portions"
+          }
+        },
+        {
+          "id": "10",
+          "title": {
+            "en": "10 portions"
+          }
+        },
+        {
+          "id": "11",
+          "title": {
+            "en": "11 portions"
+          }
+        },
+        {
+          "id": "12",
+          "title": {
+            "en": "12 portions"
+          }
+        }
+      ]
     },
     "feeding_today_amount": {
       "type": "number",

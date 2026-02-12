@@ -17,9 +17,25 @@ class FeederDevice extends Homey.Device {
       model: this.getStoreValue('modelName') || this.getStoreValue('model') || '',
     }).catch(() => {});
 
-    // Register button handler for manual feed
+    // Migrate: add feeding_dosage capability for existing devices
+    if (!this.hasCapability('feeding_dosage')) {
+      await this.addCapability('feeding_dosage');
+    }
+
+    // Set default feeding dosage if not already set
+    if (this.getCapabilityValue('feeding_dosage') === null) {
+      await this.setCapabilityValue('feeding_dosage', '1').catch(() => {});
+    }
+
+    // Register button handler for manual feed (uses current dosage)
     this.registerCapabilityListener('manual_feed', async () => {
-      await this.triggerManualFeed(1);
+      const portions = parseInt(this.getCapabilityValue('feeding_dosage') || '1', 10);
+      await this.triggerManualFeed(portions);
+    });
+
+    // Register handler for feeding dosage changes
+    this.registerCapabilityListener('feeding_dosage', async (value: string) => {
+      this.log(`Feeding dosage set to ${value} portions`);
     });
 
     // Initial poll
